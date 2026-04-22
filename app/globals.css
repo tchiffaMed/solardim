@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --radius: 0.75rem;
+
+  /* Solar palette tokens */
+  --color-primary:        #D97706;
+  --color-primary-light:  #FEF3C7;
+  --color-primary-dark:   #92400E;
+  --color-surface:        #FFFFFF;
+  --color-surface-2:      #FAFAF9;
+  --color-surface-3:      #F5F5F4;
+  --color-border:         #E7E5E4;
+  --color-border-strong:  #D6D3D1;
+  --color-text:           #1C1917;
+  --color-text-muted:     #78716C;
+  --color-text-subtle:    #A8A29E;
+
+  /* Spacing system */
+  --spacing-wizard: 1.5rem;
+}
+
+.dark {
+  --color-surface:      #1C1917;
+  --color-surface-2:    #292524;
+  --color-surface-3:    #44403C;
+  --color-border:       #44403C;
+  --color-border-strong:#57534E;
+  --color-text:         #FAFAF9;
+  --color-text-muted:   #A8A29E;
+  --color-text-subtle:  #78716C;
+}
+
+@layer base {
+  * { @apply border-earth-200; }
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-surface-2);
+    color: var(--color-text);
+    @apply antialiased;
+  }
+  h1, h2, h3 { font-family: var(--font-display); }
+}
+
+@layer components {
+  /* Wizard card */
+  .wizard-card {
+    @apply bg-white rounded-2xl border border-earth-200 shadow-sm p-6;
+  }
+
+  /* Section title */
+  .section-title {
+    @apply text-xs font-semibold uppercase tracking-widest text-earth-400 mb-4 flex items-center gap-2;
+  }
+
+  /* Formula box */
+  .formula-box {
+    font-family: var(--font-mono);
+    @apply bg-sahara-50 border border-sahara-200 rounded-lg px-4 py-3 text-sm text-sahara-800 mb-4;
+  }
+
+  /* Result row */
+  .result-row {
+    @apply flex justify-between items-center py-2 border-b border-earth-100 text-sm last:border-0;
+  }
+
+  .result-value {
+    @apply font-semibold text-sky-700;
+  }
+
+  .result-highlight {
+    @apply flex justify-between items-center bg-solar-50 border border-solar-200 rounded-xl px-4 py-3 mt-3;
+  }
+
+  .result-highlight .result-value {
+    @apply text-solar-700 text-base;
+  }
+
+  /* Input field */
+  .field-label {
+    @apply block text-xs font-medium text-earth-500 mb-1.5;
+  }
+
+  .field-input {
+    @apply w-full bg-white border border-earth-200 rounded-xl px-3 py-2.5 text-sm
+           focus:outline-none focus:ring-2 focus:ring-solar-300 focus:border-solar-400
+           transition-all placeholder:text-earth-300;
+  }
+
+  /* Metric card */
+  .metric-card {
+    @apply bg-earth-50 rounded-xl p-4 flex flex-col gap-1;
+  }
+
+  .metric-label {
+    @apply text-xs text-earth-400 font-medium;
+  }
+
+  .metric-value {
+    @apply text-2xl font-semibold leading-tight;
+  }
+
+  .metric-unit {
+    @apply text-xs text-earth-400;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  /* Alert */
+  .alert-info {
+    @apply bg-sky-50 border border-sky-200 text-sky-800 rounded-xl px-4 py-3 text-sm;
+  }
+
+  .alert-warning {
+    @apply bg-solar-50 border border-solar-200 text-solar-800 rounded-xl px-4 py-3 text-sm;
+  }
+
+  .alert-success {
+    @apply bg-green-50 border border-green-200 text-green-800 rounded-xl px-4 py-3 text-sm;
+  }
+}
+
+/* Leaflet overrides */
+.leaflet-container {
+  font-family: var(--font-body) !important;
+  border-radius: 1rem;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D6D3D1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #A8A29E; }
+
+/* Table styles */
+.data-table { @apply w-full text-sm border-collapse; }
+.data-table th {
+  @apply text-left py-2.5 px-3 text-xs font-semibold uppercase tracking-wide
+         text-earth-400 bg-earth-50 border-b border-earth-200;
+}
+.data-table td {
+  @apply py-2.5 px-3 border-b border-earth-100 text-sm;
+}
+.data-table tr:last-child td { @apply border-0; }
+.data-table tr:hover td { @apply bg-earth-50/60 transition-colors; }
+.data-table input, .data-table select {
+  @apply w-full bg-transparent border border-transparent rounded-lg px-2 py-1 text-sm
+         focus:outline-none focus:border-solar-300 focus:bg-white transition-all;
+}

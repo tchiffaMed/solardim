@@ -1,0 +1,14 @@
+# Dépendances
+node_modules/
+
+# Build Next.js
+.next/
+out/
+build/
+
+# Environnement (clés secrètes)
+.env*.local
+
+# Logs
+npm-debug.log*
+yarn-error.log*
