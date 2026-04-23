@@ -1,6 +1,6 @@
 # SolarDim Niger 🌞
 
-### Outil de dimensionnement technico-financier PV — Méthode
+### Outil de dimensionnement technico-financier PV — Méthode SAHELIO
 
 > Application Next.js 14 + TypeScript + Tailwind + Zustand  
 > Toutes les données sont stockées **localement dans le navigateur** (LocalStorage via Zustand persist)
@@ -60,7 +60,7 @@ solardim-niger/
 
 ---
 
-## 🔢 Méthode de calcul — , Module 4
+## 🔢 Méthode de calcul — SAHELIO , Module 4
 
 ### A — Champ PV (§4.2.1.2)
 
@@ -146,4 +146,4 @@ Génère un rapport complet avec :
 
 Manuel SAHELIO — _Électricité Solaire Photovoltaïque : Maîtriser les bases de la conception
 à la maintenance d'un système solaire photovoltaïque_, Module 4 — Dimensionnement.
-Institut de la Francophonie pour le Développement Durable, 2023.
+Institut de la Francophonie pour le Développement Durable, .

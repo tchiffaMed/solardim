@@ -1,5 +1,5 @@
 /**
- * MOTEUR DE CALCUL — Méthode  , Module 4
+ * MOTEUR DE CALCUL — Méthode SAHELIO , Module 4
  * Dimensionnement d'une installation solaire photovoltaïque
  *
  * Référence : Manuel SAHELIO — Électricité Solaire Photovoltaïque

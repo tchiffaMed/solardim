@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 export const metadata: Metadata = {
   title: "SolarDim Niger — Dimensionnement PV",
   description:
-    "Outil de dimensionnement technico-financier d'installations solaires photovoltaïques au Niger. Méthode  .",
+    "Outil de dimensionnement technico-financier d'installations solaires photovoltaïques au Niger. Méthode SAHELIO .",
   keywords: [
     "solaire",
     "photovoltaïque",

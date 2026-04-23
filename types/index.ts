@@ -1,6 +1,6 @@
 // ============================================================
 // TYPES — SolarDim Niger
-// Basé sur la méthode  , Module 4
+// Basé sur la méthode SAHELIO , Module 4
 // ============================================================
 
 // ---------- Bilan énergétique ----------

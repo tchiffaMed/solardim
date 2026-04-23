@@ -5,7 +5,7 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { nanoid } from 'nanoid'; // remplacer par crypto.randomUUID() si besoin
+
 import type {
   Charge, InstallationSite, Panel, Battery,
   Inverter, MpptController, SystemParams, CalcResults,
@@ -112,7 +112,10 @@ interface SolarStore {
 }
 
 function generateId(): string {
-  return Math.random().toString(36).slice(2, 9);
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID().slice(0, 8);
+  }
+  return Math.random().toString(36).slice(2, 10);
 }
 
 export const useSolarStore = create<SolarStore>()(

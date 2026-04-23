@@ -25,7 +25,6 @@ export default function StepOffre() {
     selectedBattery,
     selectedInverter,
     selectedMppt,
-    results,
     params,
     site,
     localPrepXOF,
@@ -36,6 +35,9 @@ export default function StepOffre() {
     updateParams,
   } = store;
 
+  // Récupérer results séparément pour un narrowing TypeScript correct
+  const storeResults = store.results;
+
   const [editingProject, setEditingProject] = useState(false);
   const [customPrices, setCustomPrices] = useState<Record<number, number>>({});
   const [editingCell, setEditingCell] = useState<number | null>(null);
@@ -43,7 +45,8 @@ export default function StepOffre() {
   const [activeTab, setActiveTab] = useState<"offre" | "graphiques">("offre");
   const loc = site.location;
 
-  if (!results) {
+  // Garde null — après ce point, results est CalcResults (non-null)
+  if (!storeResults) {
     return (
       <div className="wizard-card text-center py-16">
         <FileText className="w-12 h-12 text-earth-300 mx-auto mb-4" />
@@ -56,6 +59,9 @@ export default function StepOffre() {
       </div>
     );
   }
+
+  // À ce stade TypeScript sait que storeResults est CalcResults (non-null)
+  const results = storeResults;
 
   const financial = calculateFinancial({
     panel: selectedPanel,
@@ -88,6 +94,7 @@ export default function StepOffre() {
   });
 
   async function handleExportPDF() {
+    if (!results) return;
     setGeneratingPDF(true);
     try {
       const { generatePDF } = await import("@/lib/pdfGenerator");
@@ -105,7 +112,7 @@ export default function StepOffre() {
         inverter: selectedInverter,
         mppt: selectedMppt,
         params,
-        results,
+        results: results, // non-null garanti par la garde ci-dessus
         financial: {
           ...financial,
           lines,
@@ -195,7 +202,7 @@ export default function StepOffre() {
                   <div>
                     <div className="font-display text-xl">SolarDim Niger</div>
                     <div className="text-earth-400 text-xs">
-                      Dimensionnement PV · Méthode{" "}
+                      Dimensionnement PV · Méthode SAHELIO
                     </div>
                   </div>
                 </div>

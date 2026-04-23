@@ -50,7 +50,7 @@ export default function HomePage() {
           </div>
           <div className="flex items-center gap-2">
             <span className="badge bg-solar-100 text-solar-800 text-xs px-3 py-1 rounded-full font-medium">
-              Méthode
+              Méthode SAHELIO
             </span>
           </div>
         </div>
@@ -77,7 +77,7 @@ export default function HomePage() {
 
             <p className="text-earth-500 text-lg leading-relaxed mb-8 max-w-lg">
               Outil professionnel de dimensionnement technico-financier basé sur
-              la méthode . Bilan énergétique, calculs complets, carte
+              la méthode SAHELIO . Bilan énergétique, calculs complets, carte
               interactive, simulation 3D et rapport PDF.
             </p>
 
@@ -144,7 +144,7 @@ export default function HomePage() {
                   <input
                     type="text"
                     className="field-input"
-                    placeholder="ex : Installation solaire — Usine de blé"
+                    placeholder="ex : Installation solaire — Usine Tchadoua"
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}
                   />
@@ -259,8 +259,9 @@ export default function HomePage() {
       <footer className="border-t border-earth-100 bg-white py-6">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <p className="text-xs text-earth-300">
-            SolarDim Niger — Outil de dimensionnement PV basé sur la méthode .
-            Données sauvegardées localement, aucune base de données utilisateur.
+            SolarDim Niger — Outil de dimensionnement PV basé sur la méthode
+            SAHELIO . Données sauvegardées localement, aucune base de données
+            utilisateur.
           </p>
         </div>
       </footer>

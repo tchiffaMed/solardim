@@ -143,7 +143,7 @@ export default function StepCalculs() {
             Calculs SAHELIO — Module 4
           </h1>
           <p className="text-earth-500 mt-1 text-sm">
-            Méthode · Irradiation mois défavorable :{" "}
+            Méthode SAHELIO · Irradiation mois défavorable :{" "}
             <strong className="text-solar-600">{irr} kWh/m²/j</strong>
           </p>
         </div>
