@@ -54,11 +54,11 @@ export default function StepBilan() {
           Recensez tous les équipements électriques. Séparez les durées jour
           (08h–16h) et nuit (17h–08h) pour optimiser le dimensionnement du parc
           batterie.{" "}
-          <span className="font-medium text-solar-600">(SAHELIO §4.1.2)</span>
+          <span className="font-medium text-solar-600">( SAHELIO §4.1.2)</span>
         </p>
       </div>
 
-      {/* Info SAHELIO */}
+      {/* Info  SAHELIO */}
       <div className="alert-info flex items-start gap-3">
         <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
         <div className="text-sm">
@@ -352,7 +352,7 @@ export default function StepBilan() {
         <div className="metric-card bg-green-50">
           <div className="metric-label">Tension système Us</div>
           <div className="metric-value text-green-700">{roughUs}</div>
-          <div className="metric-unit">SAHELIO Tab. 3 (estimation)</div>
+          <div className="metric-unit"> SAHELIO Tab. 3 (estimation)</div>
         </div>
       </div>
 

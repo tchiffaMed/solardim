@@ -6,7 +6,6 @@ import { Box, GitBranch, ChevronDown, ChevronUp, Info } from "lucide-react";
 import { useSolarStore } from "@/lib/store";
 import SchemaInstallation from "@/components/wizard/shared/SchemaInstallation";
 
-// Three.js uniquement côté client
 const SolarScene3D = dynamic(
   () => import("@/components/wizard/shared/SolarScene3D"),
   {
@@ -22,23 +21,25 @@ const SolarScene3D = dynamic(
   },
 );
 
-export default function PageVisualisations() {
+export default function StepVisualisations() {
+  const store = useSolarStore();
   const {
     site,
-    results,
     selectedPanel,
     selectedBattery,
     selectedInverter,
     selectedMppt,
     projectName,
-  } = useSolarStore();
+  } = store;
 
   const [showSchema, setShowSchema] = useState(true);
   const [show3D, setShow3D] = useState(true);
 
   const loc = site.location;
+  const storeResults = store.results;
 
-  if (!results || !loc) {
+  // Garde null — TypeScript narrowing explicite
+  if (!storeResults || !loc) {
     return (
       <div className="space-y-6">
         <h1 className="font-display text-3xl text-earth-900">Visualisations</h1>
@@ -52,6 +53,9 @@ export default function PageVisualisations() {
       </div>
     );
   }
+
+  // À ce stade TypeScript sait que storeResults est CalcResults (non-null)
+  const results = storeResults;
 
   return (
     <div className="space-y-5">
@@ -91,7 +95,6 @@ export default function PageVisualisations() {
               L'inclinaison des panneaux ({site.inclinaison}°) et l'orientation
               ({site.orientation}) sont appliquées en temps réel.
             </div>
-
             <SolarScene3D
               inclinaison={site.inclinaison}
               orientation={site.orientation}
@@ -101,8 +104,6 @@ export default function PageVisualisations() {
               nbrp={results.nbrp}
               irrDefavorable={loc.irrDefavorable}
             />
-
-            {/* Données contextuelles */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
                 { label: "Latitude site", value: `${loc.lat.toFixed(2)}°N` },
@@ -120,7 +121,11 @@ export default function PageVisualisations() {
               ].map(({ label, value, highlight }) => (
                 <div
                   key={label}
-                  className={`rounded-xl p-3 border ${highlight ? "bg-solar-50 border-solar-200" : "bg-earth-50 border-earth-100"}`}
+                  className={`rounded-xl p-3 border ${
+                    highlight
+                      ? "bg-solar-50 border-solar-200"
+                      : "bg-earth-50 border-earth-100"
+                  }`}
                 >
                   <p className="text-xs text-earth-400">{label}</p>
                   <p
@@ -158,13 +163,11 @@ export default function PageVisualisations() {
         {showSchema && (
           <div className="mt-4 space-y-3">
             <div className="alert-info text-xs">
-              Schéma généré automatiquement selon vos équipements dimensionnés :{" "}
-              {results.npTotal} panneaux en {results.nbrp} string(s) de{" "}
-              {results.nps}, {results.nbTotal} batteries,{" "}
-              {results.nMpptRequired} MPPT, {results.nInvertersRequired}{" "}
-              onduleur(s).
+              Schéma généré automatiquement : {results.npTotal} panneaux en{" "}
+              {results.nbrp} string(s) de {results.nps}, {results.nbTotal}{" "}
+              batteries, {results.nMpptRequired} MPPT,{" "}
+              {results.nInvertersRequired} onduleur(s).
             </div>
-
             <SchemaInstallation
               results={results}
               panel={selectedPanel}
@@ -173,7 +176,6 @@ export default function PageVisualisations() {
               mppt={selectedMppt}
               projectName={projectName}
             />
-
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
               {[
                 {

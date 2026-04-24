@@ -1,8 +1,8 @@
 /**
- * MOTEUR DE CALCUL — Méthode SAHELIO , Module 4
+ * MOTEUR DE CALCUL — Méthode  SAHELIO, Module 4
  * Dimensionnement d'une installation solaire photovoltaïque
  *
- * Référence : Manuel SAHELIO — Électricité Solaire Photovoltaïque
+ * Référence : Manuel  SAHELIO — Électricité Solaire Photovoltaïque
  * Institut de la Francophonie pour le Développement Durable
  */
 
@@ -16,17 +16,17 @@ import type {
 // ============================================================
 const RHO_CUIVRE = 0.017; // Résistivité cuivre Ω·mm²/m
 
-// Sections câble normalisées (SAHELIO Tableau 4)
+// Sections câble normalisées ( SAHELIO Tableau 4)
 const STANDARD_SECTIONS = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300];
 
-// Courants max par section (SAHELIO Tableau 4)
+// Courants max par section ( SAHELIO Tableau 4)
 export const SECTION_MAX_CURRENT: Record<number, number> = {
   1.5: 13, 2.5: 21, 4: 28, 6: 36, 10: 46, 16: 61,
   25: 81, 35: 99, 50: 125, 70: 160, 95: 195, 120: 220,
   150: 250, 185: 285, 240: 340, 300: 395,
 };
 
-// Tension tenue aux chocs Uw (SAHELIO Tableau 5) — Modules classe A
+// Tension tenue aux chocs Uw ( SAHELIO Tableau 5) — Modules classe A
 const UW_CHOC: Array<{ umax: number; uw: number }> = [
   { umax: 100, uw: 1500 },
   { umax: 150, uw: 2500 },
@@ -39,7 +39,7 @@ const UW_CHOC: Array<{ umax: number; uw: number }> = [
 // HELPERS
 // ============================================================
 
-/** Tension système Us selon puissance crête — SAHELIO Tableau 3 */
+/** Tension système Us selon puissance crête —  SAHELIO Tableau 3 */
 export function getSystemVoltage(pcMinWc: number): number {
   if (pcMinWc <= 500)   return 12;
   if (pcMinWc <= 2000)  return 24;
@@ -52,12 +52,12 @@ export function getStandardSection(calculated: number): number {
   return STANDARD_SECTIONS.find(s => s >= calculated) ?? 300;
 }
 
-/** Uw selon tension max système (SAHELIO Tableau 5) */
+/** Uw selon tension max système ( SAHELIO Tableau 5) */
 function getUw(voctMax: number): number {
   return UW_CHOC.find(e => voctMax <= e.umax)?.uw ?? 8000;
 }
 
-/** Info fusibles selon nombre de chaînes (SAHELIO Tableau 6) */
+/** Info fusibles selon nombre de chaînes ( SAHELIO Tableau 6) */
 function getFuseInfo(nChaines: number, isc: number): string {
   if (nChaines <= 2) {
     return `Sans objet (${nChaines} chaîne${nChaines > 1 ? 's' : ''}) — Iz ≥ ${(1.25 * isc).toFixed(1)} A`;
@@ -120,7 +120,7 @@ export function calculateEnergyBilan(
 }
 
 // ============================================================
-// DIMENSIONNEMENT COMPLET — MÉTHODE SAHELIO
+// DIMENSIONNEMENT COMPLET — MÉTHODE  SAHELIO
 // ============================================================
 
 export function calculate(
@@ -140,12 +140,12 @@ export function calculate(
   const bilan = calculateEnergyBilan(charges, params.reservePercent);
   const { totalWithReserve: Et, nightWithReserve: En, peakPowerW: Ppt } = bilan;
 
-  // ── A — CHAMP PV (SAHELIO §4.2.1.2) ──
+  // ── A — CHAMP PV ( SAHELIO §4.2.1.2) ──
 
   // Puissance crête minimale
   const pcMin = Et / (params.rp * irr);
 
-  // Tension système (SAHELIO Tableau 3)
+  // Tension système ( SAHELIO Tableau 3)
   const Us = getSystemVoltage(pcMin);
 
   // Nombre de panneaux en série Nps = Us / Vnom_panneau
@@ -162,7 +162,7 @@ export function calculate(
   const npTotal = Nps * Nbrp;
   const pcInstalled = npTotal * panel.wp;
 
-  // ── B — BATTERIES (SAHELIO §4.2.2.1) ──
+  // ── B — BATTERIES ( SAHELIO §4.2.2.1) ──
   // Cp [Ah] = (En × Nj) / (Us × DoD × Rb)
   const Cp = (En * params.autonomyDays) / (battery.voltageV !== Us
     ? (Us * battery.dod * battery.efficiency)
@@ -180,7 +180,7 @@ export function calculate(
   // Total batteries
   const NbTotal = Nbs * Nbp;
 
-  // ── C — RÉGULATEUR MPPT (SAHELIO §4.2.2.2.2) — 3 CONDITIONS ──
+  // ── C — RÉGULATEUR MPPT ( SAHELIO §4.2.2.2.2) — 3 CONDITIONS ──
   const Voct = panel.voc * Nps;
   const Icct = panel.isc * Nbrp;
 
@@ -196,23 +196,23 @@ export function calculate(
   // Nombre de MPPT nécessaires
   const nMppt = Math.ceil(Imrc / mppt.imaxA);
 
-  // ── D — ONDULEUR (SAHELIO §4.2.2.3) ──
+  // ── D — ONDULEUR ( SAHELIO §4.2.2.3) ──
   // P_ond = k × Ppt / ƞond avec k=1.25
   const Pond = (1.25 * Ppt) / inverter.efficiency;
   const nOnd = Math.ceil(Pond / inverter.powerW);
 
-  // Disjoncteur AC monophasé (SAHELIO §4.2.2.5.2)
+  // Disjoncteur AC monophasé ( SAHELIO §4.2.2.5.2)
   // In > 1.1 × (1.5 × P_conv) / (A × U × (1-ΔU))
   const InAC = 1.1 * (1.5 * inverter.powerW) / (1 * 220 * 0.95);
 
-  // ── E — CÂBLES (SAHELIO §4.2.2.4) ──
+  // ── E — CÂBLES ( SAHELIO §4.2.2.4) ──
   // S = (2 × L × Ie × ρ) / ΔU(V)
   const Ie = pcMin / Us;
   const DUv = (params.voltageDrop / 100) * Us;
   const Section = (2 * params.cableLength * Ie * RHO_CUIVRE) / DUv;
   const SectionStd = getStandardSection(Section);
 
-  // ── PROTECTIONS (SAHELIO §4.2.2.5) ──
+  // ── PROTECTIONS ( SAHELIO §4.2.2.5) ──
 
   // Disjoncteur DC : 1.4×Isc < In < 2×Isc
   const DcBreakerMin = 1.4 * panel.isc;
@@ -222,7 +222,7 @@ export function calculate(
   const Uw = getUw(Voct);
   const UpMax = 0.8 * Uw;
 
-  // Fusibles (SAHELIO Tableau 6)
+  // Fusibles ( SAHELIO Tableau 6)
   const fuseInfo = getFuseInfo(Nbrp, panel.isc);
 
   // Sectionneur DC

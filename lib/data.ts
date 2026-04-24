@@ -180,7 +180,7 @@ export const PANELS_CATALOG: Panel[] = [
     priceXOF: 75000,
   },
   {
-    id: 'panel-250-SAHELIO',
+    id: 'panel-250- SAHELIO',
     name: 'Panneau 250Wc / 24V',
     brand: 'Standard',
     model: 'Polycrystallin 250W',
@@ -189,7 +189,7 @@ export const PANELS_CATALOG: Panel[] = [
     priceXOF: 50000,
   },
   {
-    id: 'panel-460-SAHELIO',
+    id: 'panel-460- SAHELIO',
     name: 'Panneau 460Wc / 24V',
     brand: 'Standard',
     model: 'Monocrystallin 460W',

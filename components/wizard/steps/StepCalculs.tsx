@@ -85,6 +85,7 @@ function SectionHeader({
 }
 
 export default function StepCalculs() {
+  const store = useSolarStore();
   const {
     charges,
     site,
@@ -93,15 +94,16 @@ export default function StepCalculs() {
     selectedInverter,
     selectedMppt,
     params,
-    results,
     runCalculation,
-  } = useSolarStore();
+  } = store;
 
   const canCalculate = charges.length > 0 && !!site.location;
 
   useEffect(() => {
     if (canCalculate) runCalculation();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const storeResults = store.results;
 
   if (!canCalculate) {
     return (
@@ -123,7 +125,7 @@ export default function StepCalculs() {
     );
   }
 
-  if (!results) {
+  if (!storeResults) {
     return (
       <div className="wizard-card text-center py-16">
         <div className="w-8 h-8 border-2 border-solar-300 border-t-solar-600 rounded-full animate-spin mx-auto mb-4" />
@@ -132,8 +134,9 @@ export default function StepCalculs() {
     );
   }
 
-  const r = results;
-  const irr = site.location!.irrDefavorable;
+  // TypeScript sait ici que storeResults est CalcResults (non-null)
+  const r = storeResults;
+  const irr = site.location?.irrDefavorable ?? 4.2;
 
   return (
     <div className="space-y-5">
@@ -196,7 +199,7 @@ export default function StepCalculs() {
       <div className="wizard-card">
         <SectionHeader
           icon={Sun}
-          title="A — Champ solaire PV (SAHELIO §4.2.1.2)"
+          title="A — Champ solaire PV ( SAHELIO §4.2.1.2)"
         />
         <div className="alert-info text-xs mb-4">
           Rp = {params.rp} (milieu poussiéreux Niger) · Irradiation mois
@@ -217,7 +220,7 @@ export default function StepCalculs() {
         />
         <ResultRow label="Ratio de performance Rp" value={`${params.rp}`} />
         <ResultRow
-          label="Tension système Us (SAHELIO Tableau 3)"
+          label="Tension système Us ( SAHELIO Tableau 3)"
           value={`${r.systemVoltage} V`}
           formula={`Pcmin = ${r.pcMin.toFixed(0)}Wc → ${r.systemVoltage}V`}
         />
@@ -270,7 +273,7 @@ export default function StepCalculs() {
       <div className="wizard-card">
         <SectionHeader
           icon={Battery}
-          title="B — Parc batterie (SAHELIO §4.2.2.1) — résultat en Ah"
+          title="B — Parc batterie ( SAHELIO §4.2.2.1) — résultat en Ah"
           color="sky"
         />
         <FormulaBox>{`Cp [Ah] = (En×1,25 × Nj) / (Us × DoD × Rb)\n= (${r.nightEnergyWithReserve} × ${params.autonomyDays}) / (${r.systemVoltage} × ${selectedBattery.dod} × ${selectedBattery.efficiency})\n= ${r.parkCapacityAh.toFixed(1)} Ah`}</FormulaBox>
@@ -316,7 +319,7 @@ export default function StepCalculs() {
       <div className="wizard-card">
         <SectionHeader
           icon={Settings}
-          title="C — Régulateur MPPT (SAHELIO §4.2.2.2.2) — 3 conditions"
+          title="C — Régulateur MPPT ( SAHELIO §4.2.2.2.2) — 3 conditions"
           color="earth"
         />
         <div className="alert-info text-xs mb-4">
@@ -353,7 +356,7 @@ export default function StepCalculs() {
       <div className="wizard-card">
         <SectionHeader
           icon={Zap}
-          title="D — Onduleur (SAHELIO §4.2.2.3)"
+          title="D — Onduleur ( SAHELIO §4.2.2.3)"
           color="green"
         />
         <FormulaBox>{`P_ond = k × Ppt / ƞond = 1,25 × ${r.peakPowerW} / ${selectedInverter.efficiency} = ${r.inverterPowerRequired.toFixed(0)} W`}</FormulaBox>
@@ -386,7 +389,7 @@ export default function StepCalculs() {
       <div className="wizard-card">
         <SectionHeader
           icon={AlertTriangle}
-          title="E — Câbles & Protections (SAHELIO §4.2.2.4-5)"
+          title="E — Câbles & Protections ( SAHELIO §4.2.2.4-5)"
           color="earth"
         />
         <FormulaBox>{`S = (2 × L × Ie × ρ) / ΔU(V) | ρ_Cu = 0,017 Ω·mm²/m\nIe = Pcmin/Us = ${r.pcMin.toFixed(0)}/${r.systemVoltage} = ${r.currentIe.toFixed(1)}A\nΔU = ${params.voltageDrop}% × ${r.systemVoltage}V = ${r.voltageDrop.toFixed(2)}V\nS = (2 × ${params.cableLength} × ${r.currentIe.toFixed(1)} × 0,017) / ${r.voltageDrop.toFixed(2)} = ${r.cableSectionMm2.toFixed(1)} mm²`}</FormulaBox>
@@ -410,7 +413,7 @@ export default function StepCalculs() {
 
         <div className="divider" />
         <p className="text-xs font-semibold text-earth-400 uppercase tracking-wide mb-3">
-          Protections électriques (SAHELIO §4.2.2.5)
+          Protections électriques ( SAHELIO §4.2.2.5)
         </p>
         <ResultRow
           label="Disj. DC : 1,4×Isc < In < 2×Isc"
@@ -426,7 +429,7 @@ export default function StepCalculs() {
           value={`Up < ${r.surgeProtectionUp.toFixed(0)} V`}
         />
         <ResultRow
-          label="Fusibles chaînes PV (SAHELIO Tab.6)"
+          label="Fusibles chaînes PV ( SAHELIO Tab.6)"
           value={r.fuseInfo}
         />
         <ResultRow

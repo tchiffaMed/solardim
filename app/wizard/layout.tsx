@@ -10,7 +10,7 @@ const STEPS = [
   { id: 0, label: "Bilan énergétique", short: "Bilan" },
   { id: 1, label: "Localisation", short: "Localisation" },
   { id: 2, label: "Équipements", short: "Équip." },
-  { id: 3, label: "Calculs SAHELIO", short: "Calculs" },
+  { id: 3, label: "Calculs  SAHELIO", short: "Calculs" },
   { id: 4, label: "Visualisations", short: "3D + Schéma" },
   { id: 5, label: "Offre financière", short: "Offre" },
 ];

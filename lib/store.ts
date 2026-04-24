@@ -20,8 +20,8 @@ import {
 
 // ── Valeurs par défaut ──
 const DEFAULT_PARAMS: SystemParams = {
-  rp: 0.65,             // Niger = milieu poussiéreux (SAHELIO)
-  reservePercent: 25,   // Taux de réserve SAHELIO
+  rp: 0.65,             // Niger = milieu poussiéreux ( SAHELIO)
+  reservePercent: 25,   // Taux de réserve  SAHELIO
   autonomyDays: 1,
   tva: 19,              // TVA Niger
   cableLength: 50,

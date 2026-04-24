@@ -62,11 +62,11 @@ export default function StepLocalisation() {
         </p>
       </div>
 
-      {/* Alert SAHELIO */}
+      {/* Alert  SAHELIO */}
       <div className="alert-info flex items-start gap-3">
         <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
         <div className="text-sm">
-          <strong>SAHELIO §4.2.1.1 :</strong> Pour le dimensionnement, on
+          <strong> SAHELIO §4.2.1.1 :</strong> Pour le dimensionnement, on
           utilise l'irradiation du mois le plus défavorable. Au Niger, ce mois
           est généralement
           <strong> décembre/janvier</strong> en raison de l'harmattan et de

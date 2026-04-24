@@ -75,7 +75,7 @@ function addPageFooter(doc: any, page: number, total: number, project: string) {
   doc.setDrawColor(...C.solar); doc.setLineWidth(0.4);
   doc.line(MAR, h - 12, w - MAR, h - 12);
   doc.setFontSize(7); doc.setFont('helvetica', 'normal'); doc.setTextColor(...C.earthM);
-  doc.text('SolarDim Niger - Methode SAHELIO ', MAR, h - 7);
+  doc.text('SolarDim Niger - Methode  SAHELIO', MAR, h - 7);
   doc.text(trunc(project, 30), w / 2, h - 7, { align: 'center' });
   doc.text(`Page ${page} / ${total}`, w - MAR, h - 7, { align: 'right' });
 }
@@ -197,11 +197,11 @@ export async function generatePDF(data: ReportData): Promise<void> {
     doc.text(`Inclinaison : ${data.site.inclinaison}   |   Orientation : ${data.site.orientation}`, W / 2, 135, { align: 'center' });
   }
 
-  // Badge SAHELIO
+  // Badge  SAHELIO
   doc.setFillColor(...C.skyL); doc.setDrawColor(...C.sky); doc.setLineWidth(0.4);
   doc.roundedRect(W / 2 - 52, 141, 104, 11, 3, 3, 'FD');
   doc.setFontSize(7.5); doc.setFont('helvetica', 'bold'); doc.setTextColor(...C.sky);
-  doc.text('Methode SAHELIO  - Module 4 - Electricite Solaire PV', W / 2, 148, { align: 'center' });
+  doc.text('Methode  SAHELIO - Module 4 - Electricite Solaire PV', W / 2, 148, { align: 'center' });
 
   // Montant
   doc.setFillColor(40, 36, 33); doc.roundedRect(MAR, 158, W - MAR * 2, 22, 3, 3, 'F');
@@ -299,14 +299,14 @@ export async function generatePDF(data: ReportData): Promise<void> {
   ], y);
 
   // ════════════════════════
-  // PAGE 3 — CALCULS SAHELIO
+  // PAGE 3 — CALCULS  SAHELIO
   // ════════════════════════
   doc.addPage();
-  addPageHeader(doc, 'CALCULS SAHELIO - DIMENSIONNEMENT', data.projectName);
+  addPageHeader(doc, 'CALCULS  SAHELIO - DIMENSIONNEMENT', data.projectName);
   y = 20;
 
   // A — PV
-  y = secTitle(doc, 'II.A - CHAMP SOLAIRE PV  (SAHELIO §4.2.1.2)', y);
+  y = secTitle(doc, 'II.A - CHAMP SOLAIRE PV  ( SAHELIO §4.2.1.2)', y);
   doc.setFontSize(8); doc.setFont('helvetica', 'normal'); doc.setTextColor(...C.earthM);
   doc.text(`Site : ${trunc(loc?.ville ?? '-', 22)}  |  Irr. mois def. : ${irrDef} kWh/m2/j  |  Rp = ${data.params.rp}`, MAR, y);
   y += 6;
@@ -318,7 +318,7 @@ export async function generatePDF(data: ReportData): Promise<void> {
     ['Energie totale journaliere (x1,25)',    `${fNum(r.totalEnergyWithReserve)} Wh`],
     ['Irradiation mois defavorable',          `${irrDef} kWh/m2/j`],
     ['Ratio de performance Rp',               String(data.params.rp)],
-    ['Tension systeme Us (SAHELIO Tableau 3)',    `${r.systemVoltage} V`],
+    ['Tension systeme Us ( SAHELIO Tableau 3)',    `${r.systemVoltage} V`],
     ['=> Pcmin',                              `${fNum(r.pcMin, 1)} Wc`, true],
     ['Panneaux en serie Nps = Us/Vnom',       `${r.nps}`],
     ['Strings en parallele Nbrp',             `${r.nbrp}`],
@@ -328,7 +328,7 @@ export async function generatePDF(data: ReportData): Promise<void> {
 
   // B — Batteries
   y = chkBreak(doc, y, 75);
-  y = secTitle(doc, 'II.B - PARC BATTERIE  (SAHELIO §4.2.2.1)', y);
+  y = secTitle(doc, 'II.B - PARC BATTERIE  ( SAHELIO §4.2.2.1)', y);
   y = fmlaBox(doc, [
     `Cp[Ah] = (En_nuit x Nj) / (Us x DoD x Rb)`,
     `       = (${fNum(r.nightEnergyWithReserve)} x ${data.params.autonomyDays}) / (${r.systemVoltage} x ${data.battery.dod} x ${data.battery.efficiency}) = ${fNum(r.parkCapacityAh, 1)} Ah`,
@@ -347,7 +347,7 @@ export async function generatePDF(data: ReportData): Promise<void> {
 
   // C — MPPT
   y = chkBreak(doc, y, 60);
-  y = secTitle(doc, 'II.C - REGULATEUR MPPT  (SAHELIO §4.2.2.2.2) — 3 conditions', y);
+  y = secTitle(doc, 'II.C - REGULATEUR MPPT  ( SAHELIO §4.2.2.2.2) — 3 conditions', y);
   y = fmlaBox(doc, [
     `Voct = ${data.panel.voc} x ${r.nps} = ${fNum(r.voct, 1)} V   |   Icct = ${data.panel.isc} x ${r.nbrp} = ${fNum(r.icct, 1)} A`,
     `(1) Pmrc >= 1,25 x Pcu x Np = ${fNum(r.pmrcRequired, 0)} W`,
@@ -363,7 +363,7 @@ export async function generatePDF(data: ReportData): Promise<void> {
 
   // D — Onduleur
   y = chkBreak(doc, y, 55);
-  y = secTitle(doc, 'II.D - ONDULEUR  (SAHELIO §4.2.2.3)', y);
+  y = secTitle(doc, 'II.D - ONDULEUR  ( SAHELIO §4.2.2.3)', y);
   y = fmlaBox(doc, [`P_ond = 1,25 x ${fNum(r.peakPowerW)} / ${data.inverter.efficiency} = ${fNum(r.inverterPowerRequired, 0)} W`], y);
   y = resTable(doc, [
     ['Puissance de pointe Ppt',  `${fNum(r.peakPowerW)} W`],
@@ -374,7 +374,7 @@ export async function generatePDF(data: ReportData): Promise<void> {
 
   // E — Câbles
   y = chkBreak(doc, y, 90);
-  y = secTitle(doc, 'II.E - CABLES & PROTECTIONS  (SAHELIO §4.2.2.4-5)', y);
+  y = secTitle(doc, 'II.E - CABLES & PROTECTIONS  ( SAHELIO §4.2.2.4-5)', y);
   y = fmlaBox(doc, [
     `S = (2 x L x Ie x rho_Cu) / DeltaU   |   rho_Cu = 0,017 Ohm.mm2/m   |   DU <= 3%`,
     `Ie = Pcmin/Us = ${fNum(r.pcMin, 0)} / ${r.systemVoltage} = ${fNum(r.currentIe, 1)} A`,

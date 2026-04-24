@@ -43,13 +43,13 @@ solardim-niger/
 │       │   ├── StepBilan.tsx        # Étape 1 — Bilan énergétique
 │       │   ├── StepLocalisation.tsx # Étape 2 — Carte Niger
 │       │   ├── StepEquipements.tsx  # Étape 3 — Catalogue
-│       │   ├── StepCalculs.tsx      # Étape 4 — Calculs SAHELIO
+│       │   ├── StepCalculs.tsx      # Étape 4 — Calculs  SAHELIO
 │       │   └── StepOffre.tsx        # Étape 5 — Offre + PDF
 │       └── shared/
 │           └── MapLeaflet.tsx       # Carte Leaflet (client-only)
 │
 ├── lib/
-│   ├── calculations.ts      # Moteur de calcul SAHELIO complet
+│   ├── calculations.ts      # Moteur de calcul  SAHELIO complet
 │   ├── data.ts              # Données statiques Niger + catalogue
 │   ├── store.ts             # Store Zustand (persistance LocalStorage)
 │   └── utils.ts             # Utilitaires (cn, format...)
@@ -60,7 +60,7 @@ solardim-niger/
 
 ---
 
-## 🔢 Méthode de calcul — SAHELIO , Module 4
+## 🔢 Méthode de calcul — SAHELIO, Module 4
 
 ### A — Champ PV (§4.2.1.2)
 
@@ -68,7 +68,7 @@ solardim-niger/
 Etot = Σ(charges) × 1,25 (taux de réserve)
 Pcmin = Etot / (Rp × Irr_défavorable)
 Rp = 0,65 (milieu poussiéreux Niger)
-Us = f(Pcmin) → Tableau 3 SAHELIO (12/24/48/96V)
+Us = f(Pcmin) → Tableau 3  SAHELIO (12/24/48/96V)
 Nps = Us / Vnom_panneau
 Np = ⌈Pcmin / Pcu⌉
 Nbrp = ⌈Np / Nps⌉
@@ -106,7 +106,7 @@ S = (2 × L × Ie × ρ) / ΔU(V)  | ρ_Cu = 0,017 | ΔU ≤ 3%
 ### Protections (§4.2.2.5)
 
 - Disj. DC : `1,4 × Isc < In < 2 × Isc`
-- Parafoudre DC type 2 : `Up < 0,8 × Uw` (SAHELIO Tableau 5)
+- Parafoudre DC type 2 : `Up < 0,8 × Uw` ( SAHELIO Tableau 5)
 - Fusibles : SAHELIO Tableau 6 (selon nombre de chaînes)
 - Sectionneur : `In > Nbrp × 1,25 × Isc`, `Ue > 1,2 × Nps × Voc`
 
@@ -146,4 +146,4 @@ Génère un rapport complet avec :
 
 Manuel SAHELIO — _Électricité Solaire Photovoltaïque : Maîtriser les bases de la conception
 à la maintenance d'un système solaire photovoltaïque_, Module 4 — Dimensionnement.
-Institut de la Francophonie pour le Développement Durable, .
+Institut de la Francophonie pour le Développement Durable, 2023.
