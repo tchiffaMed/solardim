@@ -144,7 +144,7 @@ export default function HomePage() {
                   <input
                     type="text"
                     className="field-input"
-                    placeholder="ex : Installation solaire — Usine Tchadoua"
+                    placeholder="ex : Installation solaire — Usine Fabrication Electroniques"
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}
                   />
